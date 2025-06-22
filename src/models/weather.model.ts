@@ -8,7 +8,7 @@ export interface WeatherDocument extends Document {
   lon: number;
   data: mongoose.Schema.Types.Mixed;
   fetchedAt: Date;
-  source: 'cache' | 'openweather'; 
+  source: 'cache' | 'openweather';
 }
 
 const WeatherSchema = new Schema<WeatherDocument>(
@@ -22,7 +22,7 @@ const WeatherSchema = new Schema<WeatherDocument>(
       default: Date.now,
       expires: openWeatherConfig.staleCacheToleranceMinutes * 60
     },
-    source: { type: String, enum: ['cache', 'openweather'], required: true } 
+    source: { type: String, enum: ['cache', 'openweather'], required: true }
   },
   {
     timestamps: false,

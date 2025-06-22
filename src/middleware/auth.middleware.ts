@@ -6,6 +6,7 @@ import { AppError } from '../utils/error';
 import { FORBIDDEN, UNAUTHORIZED } from '../utils/http-status';
 import logger from '../utils/logger';
 import mongoose from 'mongoose';
+import { TokenBlacklistCollection } from '../models/tokenBlacklist.model'; 
 
 export interface AuthRequest extends Request {
   user?: UserDocument;
@@ -28,6 +29,11 @@ export const authorized = async (
 
     if (!token) {
       return next(new AppError('You are not logged in', UNAUTHORIZED));
+    }
+
+    const isBlacklisted = await TokenBlacklistCollection.findOne({ token });
+    if (isBlacklisted) {
+      return next(new AppError('Token invalidated, please login again', UNAUTHORIZED));
     }
 
     const decoded = jwt.verify(token, jwtConfig.secret) as {
