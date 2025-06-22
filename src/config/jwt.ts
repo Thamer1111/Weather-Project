@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 import { UserDocument } from '../models/user.model';
 
 export const jwtConfig = {
-  secret: process.env.JWT_SECRET || 'your-super-secret-jwt-key',
+  secret: 'MySuperUniqueWeatherHubSecretKey_RandomString123!@#$ABCXYZ_Version7.0',
   accessToken: {
     options: {
       expiresIn: '15m',
